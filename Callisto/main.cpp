@@ -22,14 +22,6 @@ int main(int argv, char** argc) {
 
 	glViewport(0, 0, 800, 600);
 
-	GLuint vertexBufferId;
-	glGenBuffers(1, &vertexBufferId);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
-
-	GLuint vertexArrayId;
-	glGenVertexArrays(1, &vertexArrayId);
-	glBindVertexArray(vertexArrayId);
-
 
 	while (!glfwWindowShouldClose(window)) {
 
