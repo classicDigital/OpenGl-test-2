@@ -2,6 +2,7 @@
 *.vsidx
 *.lock
 *.tlog
+Callisto/x64
 Callisto/.vs/Callisto/v17/.suo
 Callisto/.vs/Callisto/v17/Browse.VC.db
 Callisto/.vs/Callisto/v17/Browse.VC.db-shm
