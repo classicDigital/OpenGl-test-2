@@ -6,3 +6,4 @@
 Callisto/.vs/Callisto/v17/
 Callisto/x64/Debug/
 *.ipch
+Callisto/x64/Debug/VertexBuffer.obj
