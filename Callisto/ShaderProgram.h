@@ -5,13 +5,16 @@
 #include <sstream>
 #include <fstream>
 #include <string>
-
-std::string getFile(const char* PATH);
+#include <iostream>
 
 class Shader {
+private:
+	//void createShader(const GLenum TYPE);
+	std::string getFile(const char* PATH);
+	GLint isCompiled = 0;
 public:
 	GLuint ID = 0;
-	Shader();
+	Shader(const char* vertexShaderPath, const char* fragmentShaderPath);
 	void enable();
 	void disable();
 	void del();

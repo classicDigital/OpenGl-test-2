@@ -24,6 +24,7 @@ int main(int argv, char** argc) {
 
 	glViewport(0, 0, 800, 600);
 
+	Shader shader("shaders/vertex.glsl", "shader/fragment.glsl");
 
 	while (!glfwWindowShouldClose(window)) {
 
