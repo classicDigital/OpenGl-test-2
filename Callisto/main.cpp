@@ -3,11 +3,13 @@
 #include <iostream>
 
 #include "VertexBuffer.h"
+#include "VertexArray.h"
+#include "ShaderProgram.h"
 
 GLfloat vertexData[] = {
 	-0.5f, -0.55f, 0.0f, // bottom left
 	 0.0f,  0.5f, 0.0f, // top
-	 0.5f, -0.5f, 0.0f  // bottom right
+	 0.5f, -0.5f, 0.0f // bottom right
 };
 
 int main(int argv, char** argc) {
