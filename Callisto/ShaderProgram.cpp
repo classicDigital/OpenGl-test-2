@@ -6,10 +6,11 @@ std::string Shader::getFile(const char* PATH) {
 	std::stringstream buffer;
 	std::string data;
 
+
 	file.open(PATH);
 	buffer << file.rdbuf();
-	file.close();
 	data = buffer.str();
+	file.close();
 	return data;
 }
 
@@ -19,8 +20,11 @@ Shader::Shader(const char* vertexShaderPath, const char* fragmentShaderPath) {
 	std::string __vertexsrc = getFile(vertexShaderPath);
 	std::string __fragmentsrc = getFile(fragmentShaderPath);
 
+	if (__vertexsrc == "" || __fragmentsrc == "") { std::cout << "Error opening file!\n"; }
+
 	const char* vertexData = __vertexsrc.c_str();
 	const char* fragData = __fragmentsrc.c_str();
+
 
 	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vs, 1, &vertexData, nullptr);
@@ -34,7 +38,7 @@ Shader::Shader(const char* vertexShaderPath, const char* fragmentShaderPath) {
 		glGetShaderiv(vs, GL_INFO_LOG_LENGTH, &maxLength);
 		glGetShaderInfoLog(vs, maxLength, &maxLength, &info[0]);
 
-		std::cout << info << std::endl;
+		std::cout << "ERROR::COMPILING::VERTEX::SHADER\n" << info <<  std::endl;
 
 		glDeleteShader(vs);
 	}
@@ -51,15 +55,16 @@ Shader::Shader(const char* vertexShaderPath, const char* fragmentShaderPath) {
 		glGetShaderiv(fs, GL_INFO_LOG_LENGTH, &maxLength);
 		glGetShaderInfoLog(fs, maxLength, &maxLength, &info[0]);
 
+		std::cout << "ERROR::COMPILING::FRAGMENT::SHADER\n" << info << std::endl;
 		std::cout << info << std::endl;
 
 		glDeleteShader(fs);
 	}
 
-
+	glAttachShader(ID, vs);
+	glAttachShader(ID, fs);
+	glLinkProgram(ID);
 }
-
-void Shader::setAttributes() {}
 
 void Shader::enable() {
 	glUseProgram(ID);

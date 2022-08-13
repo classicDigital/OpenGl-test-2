@@ -5,6 +5,10 @@ VertexArray::VertexArray() {
 	glBindVertexArray(ID);
 }
 
+void VertexArray::setAttributes(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, int offset) {
+	glVertexAttribPointer(index, size, type, normalized, stride, (void*)offset);
+}
+
 void VertexArray::bind() {
 	glBindVertexArray(ID);
 }

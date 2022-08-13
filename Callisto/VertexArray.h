@@ -11,6 +11,7 @@ public:
 	void bind();
 	void unbind();
 	void del();
+	void setAttributes(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, int offset);
 };
 
 #endif
