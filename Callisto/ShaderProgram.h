@@ -18,6 +18,10 @@ public:
 	void enable();
 	void disable();
 	void del();
+
+	void setUniformInt(const char* variableName, GLint value);
+	void setUniformFloat(const char* variableName, GLfloat value);
+	void setUniformBool(const char* variableName, GLboolean value);
 };
 
 #endif

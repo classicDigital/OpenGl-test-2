@@ -77,3 +77,15 @@ void Shader::disable() {
 void Shader::del() {
 	glDeleteProgram(ID);
 }
+
+void Shader::setUniformInt(const char* variableName, GLint value) {
+	glUniform1i(glGetUniformLocation(ID, variableName), value);
+}
+
+void Shader::setUniformFloat(const char* variableName, GLfloat value) {
+	glUniform1f(glGetUniformLocation(ID, variableName), value);
+}
+
+void Shader::setUniformBool(const char* variableName, GLboolean value) {
+	glUniform1i(glGetUniformLocation(ID, variableName), value);
+}
