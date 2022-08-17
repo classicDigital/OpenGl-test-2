@@ -1,8 +1,11 @@
 #version 330 core
 
 out vec4 aColor;
-uniform float time;
+
+in vec2 Texx;
+
+uniform sampler2D samplr;
 
 void main() {
-	aColor = vec4(0.0f, abs(sin(time)), 0.0f, 1.0f);
+	aColor = texture(samplr, Texx);//vec4(0.0f, 1.0f, 0.0f, 1.0f);
 }

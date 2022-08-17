@@ -7,7 +7,7 @@ class VertexBuffer {
 public:
 	GLuint ID;
 	
-	VertexBuffer(GLsizeiptr size, void* data, GLenum usage);
+	VertexBuffer(size_t size, void* data, GLenum usage);
 	void bind();
 	void unbind();
 	void del();
