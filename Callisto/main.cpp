@@ -43,7 +43,7 @@ int main(int argv, char** argc) {
 
 	Shader shader("shaders/vertex.glsl", "shaders/fragment.glsl");
 
-	Texture tex1("res/night_bliss.jpg", true);
+	Texture tex1("res/wall.jpg", true);
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
