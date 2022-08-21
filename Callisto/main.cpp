@@ -29,10 +29,10 @@ std::vector<GLuint> indices = {
 	3, 2, 1,
 	4, 5, 6, // back
 	7, 6, 5,
-	2, 3, 6, // right
-	7, 6, 3,
 	0, 1, 4, // left
-	5, 4, 1
+	5, 4, 1,
+	2, 3, 6, // right
+	7, 6, 3
 };
 
 int main(int argv, char** argc) {
@@ -62,9 +62,12 @@ int main(int argv, char** argc) {
 	while (!glfwWindowShouldClose(window)) {
 		shader.enable();
 
-		glm::mat4x4 proj = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -2.0f, 1.0f);
-		glm::mat4 view = glm::rotate(glm::mat4(1), (float)glfwGetTime(), glm::vec3(0, 1, 1));
-		glm::mat4x4 model = glm::mat4(1);
+		float time = (float)glfwGetTime();
+
+		//glm::mat4x4 proj = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -2.0f, 1.0f);
+		glm::mat4x4 proj = glm::perspective(glm::radians(120.0f), 1.0f, -1.0f, 1.0f);
+		glm::mat4 view = glm::rotate(glm::mat4(1), time, glm::vec3(0, 1, 0));
+		glm::mat4x4 model = glm::rotate(glm::mat4(1), time, glm::vec3(0, 1, 1));
 
 		glm::mat4x3 pvm = proj * view * model;
 
