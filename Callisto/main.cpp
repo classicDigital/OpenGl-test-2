@@ -42,10 +42,10 @@ int main(int argv, char** argc) {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Callisto", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(600, 600, "Callisto", NULL, NULL);
 	glfwMakeContextCurrent(window); gladLoadGL();
 
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, 600, 600);
 
 	VertexBuffer vbo(vertexData.size() * sizeof(float), (void*)&vertexData[0], GL_STATIC_DRAW);
 	ElementBuffer ebo(sizeof(indices), &indices, GL_STATIC_DRAW);
@@ -59,14 +59,11 @@ int main(int argv, char** argc) {
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	
-	
-	glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 	while (!glfwWindowShouldClose(window)) {
 		shader.enable();
 
-		glm::mat4x4 proj = glm::ortho(-1, 1, -1, 1, 0, 1);
-		glm::mat4 view = glm::rotate(glm::mat4(1), (float)sin(glfwGetTime()), glm::vec3(0, 1, 0));
+		glm::mat4x4 proj = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -2.0f, 1.0f);
+		glm::mat4 view = glm::rotate(glm::mat4(1), (float)glfwGetTime(), glm::vec3(0, 1, 1));
 		glm::mat4x4 model = glm::mat4(1);
 
 		glm::mat4x3 pvm = proj * view * model;
