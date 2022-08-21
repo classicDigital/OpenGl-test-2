@@ -3,23 +3,36 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <vector>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "VertexBuffer.h"
 #include "VertexArray.h"
 #include "ElementBuffer.h"
 #include "ShaderProgram.h"
-#include "Texture.h"
+
 
 std::vector<GLfloat> vertexData = {
-	-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,// bottom left
-	-0.5f,  0.5f, 0.0f, 0.0f, 1.0f,// top left
-	 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,// bottom right
-	 0.5f,  0.5f, 0.0f, 1.0f, 1.0f // top right
+	-0.5f, -0.5f, 0.5f,// bottom left  front 0
+	-0.5f,  0.5f, 0.5f,// top left     front 1
+	 0.5f, -0.5f, 0.5f,// bottom right front 2
+	 0.5f,  0.5f, 0.5f,// top right	   front 3
+
+	-0.5f, -0.5f,-0.5f,// bottom left  back 4
+	-0.5f,  0.5f,-0.5f,// top left     back 5
+	 0.5f, -0.5f,-0.5f,// bottom right back 6
+	 0.5f,  0.5f,-0.5f // top right    back 7
 };
 
 std::vector<GLuint> indices = {
-	0, 1, 2,
-	3, 2, 1
+	0, 1, 2, // front
+	3, 2, 1,
+	4, 5, 6, // back
+	7, 6, 5,
+	2, 3, 6, // right
+	7, 6, 3,
+	0, 1, 4, // left
+	5, 4, 1
 };
 
 int main(int argv, char** argc) {
@@ -38,21 +51,19 @@ int main(int argv, char** argc) {
 	ElementBuffer ebo(sizeof(indices), &indices, GL_STATIC_DRAW);
 	VertexArray vao;
 
-	vao.setAttributes(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), 0 * sizeof(float));
-	vao.setAttributes(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), 3 * sizeof(float));
+	vao.setAttributes(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0 * sizeof(float));
 
 	Shader shader("shaders/vertex.glsl", "shaders/fragment.glsl");
 
-	Texture tex1("res/wall.jpg", true);
-
 	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
+
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	while (!glfwWindowShouldClose(window)) {
 		shader.enable();
 
 		glClear(GL_COLOR_BUFFER_BIT);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, &indices[0]);
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, &indices[0]);
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
