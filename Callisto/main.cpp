@@ -1,18 +1,21 @@
 #define STB_IMAGE_IMPLEMENTATION
 
-#define WIDTH 800
-#define HEIGHT 600
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <IMGUI/imgui.h>
+#include <IMGUI/imgui_impl_glfw.h>
+#include <IMGUI/imgui_impl_opengl3.h>
+
+#include <iostream>
+#include <vector>
 
 #include "VertexBuffer.h"
 #include "VertexArray.h"
-#include "ElementBuffer.h"
 #include "ShaderProgram.h"
+
+
 
 
 std::vector<GLfloat> vertexData = {
@@ -71,38 +74,15 @@ std::vector<GLfloat> vertexData = {
 	 0.5f, -0.5f, -0.5f,	0.0f, 1.0f, 1.0f, // BRB
 };
 
-/*
-std::vector<GLuint> indices = {
-	0, 1, 2, // front
-	3, 2, 1,
-	4, 6, 5, // back
-	7, 5, 6,
-	0, 1, 4, // left
-	5, 4, 1,
-	2, 3, 6, // right
-	7, 6, 3,
-	5, 1, 3, // top
-	7, 3, 5,
-	0, 4, 2, // bottom
-	4, 6, 2
-};
-*/
-
-float aspect = WIDTH / HEIGHT;
-
 int main(int argv, char** argc) {
 
 	glfwInit();
-	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Callisto", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(800, 600, "Callisto", NULL, NULL);
 	glfwMakeContextCurrent(window); gladLoadGL();
-
-	glViewport(0, 0, WIDTH, HEIGHT);
 	
-
 	VertexBuffer vbo(vertexData.size() * sizeof(float), (void*)&vertexData[0], GL_STATIC_DRAW);
 	VertexArray vao;
 
@@ -113,18 +93,55 @@ int main(int argv, char** argc) {
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+/*=======================IMGUI================================*/
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGui::StyleColorsDark();
+	
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init("#version 330");
 
-	// TODO : fix aspect ratio.
+	
+/*============================================================*/
 
 	while (!glfwWindowShouldClose(window)) {
+		glfwPollEvents();
+
+		int width;
+		int height;
+		glfwGetWindowSize(window, &width, &height);
+		
+
 		shader.enable();
 
 		float time = (float)glfwGetTime();
 
+		/*=======================IMGUI================================*/
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		bool isWireframe;
+
+		ImGui::Begin("TEST");
+		ImGui::Checkbox("Wireframe mode: ", &isWireframe);
+
+		if (isWireframe) {
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		}
+		else {
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		}
+		ImGui::End();
+
+		/*============================================================*/
+
 		
-		glm::mat4x4 proj = glm::perspective(glm::radians(95.0f), aspect, 0.02f, 100.0f);
+		glm::mat4x4 proj = glm::perspective(glm::radians(95.0f), (float)width / (float)height, 0.02f, 100.0f);
 		glm::mat4 view = glm::rotate(glm::mat4(1), time, glm::vec3(0, 1, 1));
 		glm::mat4 model = glm::rotate(glm::mat4(1), time, glm::vec3(1, 1, 0));
 		
@@ -133,9 +150,12 @@ int main(int argv, char** argc) {
 
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glDrawArrays(GL_TRIANGLES, 0, 64);
-
-		glfwPollEvents();
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glViewport(0, 0, width, height);
+		
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		
 		glfwSwapBuffers(window);
 	}
 

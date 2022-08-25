@@ -13,12 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Core Dependencies">
+      <UniqueIdentifier>{737cbb06-b51b-4163-a7ab-c60239a49d5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core Dependencies\ImGUI">
+      <UniqueIdentifier>{9f0ddf54-31f2-4757-aa17-269f55f8ff39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core Dependencies\ImGUI\Header Files">
+      <UniqueIdentifier>{19dcac47-67f6-4233-bc07-c3a6afa582df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core Dependencies\Glad">
+      <UniqueIdentifier>{7ac440cf-a7f9-4934-a5c0-eaf3334f65c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VertexBuffer.cpp">
@@ -33,6 +42,30 @@
     <ClCompile Include="ElementBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dependencies\include\IMGUI\imgui.cpp">
+      <Filter>Core Dependencies\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\include\IMGUI\imgui_demo.cpp">
+      <Filter>Core Dependencies\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\include\IMGUI\imgui_draw.cpp">
+      <Filter>Core Dependencies\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\include\IMGUI\imgui_impl_glfw.cpp">
+      <Filter>Core Dependencies\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\include\IMGUI\imgui_impl_opengl3.cpp">
+      <Filter>Core Dependencies\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\include\IMGUI\imgui_tables.cpp">
+      <Filter>Core Dependencies\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\include\IMGUI\imgui_widgets.cpp">
+      <Filter>Core Dependencies\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Core Dependencies\Glad</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VertexBuffer.h">
@@ -46,6 +79,33 @@
     </ClInclude>
     <ClInclude Include="ElementBuffer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\IMGUI\imconfig.h">
+      <Filter>Core Dependencies\ImGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\IMGUI\imgui.h">
+      <Filter>Core Dependencies\ImGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\IMGUI\imgui_impl_glfw.h">
+      <Filter>Core Dependencies\ImGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\IMGUI\imgui_impl_opengl3.h">
+      <Filter>Core Dependencies\ImGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\IMGUI\imgui_impl_opengl3_loader.h">
+      <Filter>Core Dependencies\ImGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\IMGUI\imgui_internal.h">
+      <Filter>Core Dependencies\ImGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\IMGUI\imstb_rectpack.h">
+      <Filter>Core Dependencies\ImGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\IMGUI\imstb_textedit.h">
+      <Filter>Core Dependencies\ImGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\include\IMGUI\imstb_truetype.h">
+      <Filter>Core Dependencies\ImGUI\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

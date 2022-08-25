@@ -133,6 +133,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="dependencies\include\IMGUI\imgui.cpp" />
+    <ClCompile Include="dependencies\include\IMGUI\imgui_demo.cpp" />
+    <ClCompile Include="dependencies\include\IMGUI\imgui_draw.cpp" />
+    <ClCompile Include="dependencies\include\IMGUI\imgui_impl_glfw.cpp" />
+    <ClCompile Include="dependencies\include\IMGUI\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="dependencies\include\IMGUI\imgui_tables.cpp" />
+    <ClCompile Include="dependencies\include\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="ElementBuffer.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
@@ -141,6 +148,15 @@
     <ClCompile Include="VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dependencies\include\IMGUI\imconfig.h" />
+    <ClInclude Include="dependencies\include\IMGUI\imgui.h" />
+    <ClInclude Include="dependencies\include\IMGUI\imgui_impl_glfw.h" />
+    <ClInclude Include="dependencies\include\IMGUI\imgui_impl_opengl3.h" />
+    <ClInclude Include="dependencies\include\IMGUI\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="dependencies\include\IMGUI\imgui_internal.h" />
+    <ClInclude Include="dependencies\include\IMGUI\imstb_rectpack.h" />
+    <ClInclude Include="dependencies\include\IMGUI\imstb_textedit.h" />
+    <ClInclude Include="dependencies\include\IMGUI\imstb_truetype.h" />
     <ClInclude Include="ElementBuffer.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="VertexArray.h" />
