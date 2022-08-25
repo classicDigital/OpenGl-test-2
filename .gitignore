@@ -8,3 +8,4 @@ Callisto/x64/Debug/
 *.ipch
 Callisto/x64/Debug/VertexBuffer.obj
 Callisto/Callisto.vcxproj.user
+Callisto/imgui.ini
