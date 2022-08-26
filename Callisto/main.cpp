@@ -14,6 +14,7 @@
 #include "VertexBuffer.h"
 #include "VertexArray.h"
 #include "ShaderProgram.h"
+#include "Camera.h"
 
 std::vector<GLfloat> vertexData = {
 	// FRONT
@@ -71,6 +72,12 @@ std::vector<GLfloat> vertexData = {
 	 0.5f, -0.5f, -0.5f,	0.0f, 1.0f, 1.0f, // BRB
 };
 
+void processInput(GLFWwindow* window, glm::mat4 cameraPosition) {
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+
+	}
+}
+
 int main(int argv, char** argc) {
 
 	glfwInit();
@@ -101,8 +108,6 @@ int main(int argv, char** argc) {
 	
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
-
-	
 /*============================================================*/
 
 	bool isWireframe = false;
@@ -112,12 +117,15 @@ int main(int argv, char** argc) {
 	float y = 0;
 	float z = 0;
 
+	Camera cam(800, 600);
+
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
 
 		int width;
 		int height;
 		glfwGetWindowSize(window, &width, &height);
+		float aspect = (float)width / (float)height;
 		
 		shader.enable();
 
@@ -127,33 +135,29 @@ int main(int argv, char** argc) {
 		ImGui::NewFrame();
 
 		ImGui::Begin("Box");
+			ImGui::Checkbox("Wireframe mode: ", &isWireframe);
+			ImGui::SliderFloat("FOV", &fieldOfView, 0.0f, 120.0f);
 
-		ImGui::Checkbox("Wireframe mode: ", &isWireframe);
-		ImGui::SliderFloat("FOV", &fieldOfView, 0.0f, 120.0f);
-
-		if (isWireframe) {
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		}
-		else {
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		}
-
+			if (isWireframe) {
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			}
+			else {
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			}
 		ImGui::End();
 
 		ImGui::Begin("Camera");
-
-		ImGui::SliderFloat("X:", &x, -1.0f, 1.0f);
-		ImGui::SliderFloat("Y:", &y, -1.0f, 1.0f);
-		ImGui::SliderFloat("Z:", &z, -1.0f, 1.0f);
-
+			ImGui::SliderFloat("X", &x, -1.0f, 1.0f);
+			ImGui::SliderFloat("Y", &y, -1.0f, 1.0f);
+			ImGui::SliderFloat("Z", &z, -1.0f, 1.0f);
 		ImGui::End();
 		/*============================================================*/
 
-		glm::mat4 proj = glm::perspective(glm::radians(fieldOfView), (float)width / (float)height, 0.1f, 100.0f);
-		glm::mat4 view = glm::translate(glm::mat4(1), glm::vec3(x, y, z));
-
-		shader.setUniformMat4("proj", proj, false);
-		shader.setUniformMat4("view", view, false);
+		cam.width = width;
+		cam.height = height;
+		cam.aspect = aspect;
+		cam.matrix(shader, fieldOfView, 0.01f, 100.0f);
+		cam.input(window);
 
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
