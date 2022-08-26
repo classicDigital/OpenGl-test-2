@@ -15,9 +15,6 @@
 #include "VertexArray.h"
 #include "ShaderProgram.h"
 
-
-
-
 std::vector<GLfloat> vertexData = {
 	// FRONT
 	 0.5f, -0.5f,  0.5f,	1.0f, 0.0f, 0.0f, // BR
@@ -108,6 +105,13 @@ int main(int argv, char** argc) {
 	
 /*============================================================*/
 
+	bool isWireframe = false;
+	float fieldOfView = 95.0f;
+
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
 
@@ -115,20 +119,17 @@ int main(int argv, char** argc) {
 		int height;
 		glfwGetWindowSize(window, &width, &height);
 		
-
 		shader.enable();
-
-		float time = (float)glfwGetTime();
 
 		/*=======================IMGUI================================*/
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		bool isWireframe;
+		ImGui::Begin("Box");
 
-		ImGui::Begin("TEST");
 		ImGui::Checkbox("Wireframe mode: ", &isWireframe);
+		ImGui::SliderFloat("FOV", &fieldOfView, 0.0f, 120.0f);
 
 		if (isWireframe) {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -136,17 +137,23 @@ int main(int argv, char** argc) {
 		else {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
+
 		ImGui::End();
 
+		ImGui::Begin("Camera");
+
+		ImGui::SliderFloat("X:", &x, -1.0f, 1.0f);
+		ImGui::SliderFloat("Y:", &y, -1.0f, 1.0f);
+		ImGui::SliderFloat("Z:", &z, -1.0f, 1.0f);
+
+		ImGui::End();
 		/*============================================================*/
 
-		
-		glm::mat4x4 proj = glm::perspective(glm::radians(95.0f), (float)width / (float)height, 0.02f, 100.0f);
-		glm::mat4 view = glm::rotate(glm::mat4(1), time, glm::vec3(0, 1, 1));
-		glm::mat4 model = glm::rotate(glm::mat4(1), time, glm::vec3(1, 1, 0));
-		
-		glm::mat4x3 pvm = proj * view * model;
-		shader.setUniformMat4("pvm", pvm, false);
+		glm::mat4 proj = glm::perspective(glm::radians(fieldOfView), (float)width / (float)height, 0.1f, 100.0f);
+		glm::mat4 view = glm::translate(glm::mat4(1), glm::vec3(x, y, z));
+
+		shader.setUniformMat4("proj", proj, false);
+		shader.setUniformMat4("view", view, false);
 
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

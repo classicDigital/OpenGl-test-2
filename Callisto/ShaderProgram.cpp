@@ -90,14 +90,14 @@ void Shader::setUniformBool(const char* variableName, GLboolean value) {
 	glUniform1i(glGetUniformLocation(ID, variableName), value);
 }
 
-void Shader::setUniformMat2(const char* variableName, glm::mat2x2 matrix, GLboolean transpose) {
+void Shader::setUniformMat2(const char* variableName, glm::mat2 matrix, GLboolean transpose) {
 	glUniformMatrix2fv(glGetUniformLocation(ID, variableName), 1, transpose, glm::value_ptr(matrix));
 }
 
-void Shader::setUniformMat3(const char* variableName, glm::mat3x3 matrix, GLboolean transpose) {
+void Shader::setUniformMat3(const char* variableName, glm::mat3 matrix, GLboolean transpose) {
 	glUniformMatrix3fv(glGetUniformLocation(ID, variableName), 1, transpose, glm::value_ptr(matrix));
 }
 
-void Shader::setUniformMat4(const char* variableName, glm::mat4x4 matrix, GLboolean transpose) {
+void Shader::setUniformMat4(const char* variableName, glm::mat4 matrix, GLboolean transpose) {
 	glUniformMatrix4fv(glGetUniformLocation(ID, variableName), 1, transpose, glm::value_ptr(matrix));
 }
