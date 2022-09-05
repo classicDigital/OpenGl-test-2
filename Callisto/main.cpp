@@ -16,6 +16,10 @@
 #include "ShaderProgram.h"
 #include "Camera.h"
 
+void framebuffer_callback(GLFWwindow* winodw, int width, int height) {
+	glViewport(0, 0, width, height);
+}
+
 std::vector<GLfloat> vertexData = {
 	// FRONT
 	 0.5f, -0.5f,  0.5f,	1.0f, 0.0f, 0.0f, // BR
@@ -72,14 +76,7 @@ std::vector<GLfloat> vertexData = {
 	 0.5f, -0.5f, -0.5f,	0.0f, 1.0f, 1.0f, // BRB
 };
 
-void processInput(GLFWwindow* window, glm::mat4 cameraPosition) {
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-
-	}
-}
-
-int main(int argv, char** argc) {
-
+int main() {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -97,9 +94,7 @@ int main(int argv, char** argc) {
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
-	
 
-/*=======================IMGUI================================*/
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	
@@ -108,28 +103,22 @@ int main(int argv, char** argc) {
 	
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
-/*============================================================*/
+
+	int width = 800;
+	int height = 600;
 
 	bool isWireframe = false;
 	float fieldOfView = 95.0f;
 
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	Camera cam(800, 600);
+	shader.enable();
+	Camera camera(glm::vec3(0.0f, 0.0f, 2.0f));
 
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
 
-		int width;
-		int height;
+		glfwSetFramebufferSizeCallback(window, framebuffer_callback);
 		glfwGetWindowSize(window, &width, &height);
-		float aspect = (float)width / (float)height;
-		
-		shader.enable();
 
-		/*=======================IMGUI================================*/
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -146,27 +135,15 @@ int main(int argv, char** argc) {
 			}
 		ImGui::End();
 
-		ImGui::Begin("Camera");
-			ImGui::SliderFloat("X", &x, -1.0f, 1.0f);
-			ImGui::SliderFloat("Y", &y, -1.0f, 1.0f);
-			ImGui::SliderFloat("Z", &z, -1.0f, 1.0f);
-		ImGui::End();
-		/*============================================================*/
-
-		cam.width = width;
-		cam.height = height;
-		cam.aspect = aspect;
-		cam.matrix(shader, fieldOfView, 0.01f, 100.0f);
-		cam.input(window);
+		camera.matrix(shader, fieldOfView, 0.01f, 100.0f, width, height);
+		camera.input(window);
 
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glViewport(0, 0, width, height);
 		
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-		
 		glfwSwapBuffers(window);
 	}
 

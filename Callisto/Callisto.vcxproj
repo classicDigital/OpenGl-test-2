@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="dependencies\include\IMGUI\imgui.cpp" />
     <ClCompile Include="dependencies\include\IMGUI\imgui_demo.cpp" />
     <ClCompile Include="dependencies\include\IMGUI\imgui_draw.cpp" />
@@ -144,7 +145,6 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="VertexArray.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
   </ItemGroup>
